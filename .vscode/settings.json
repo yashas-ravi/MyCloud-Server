@@ -1,0 +1,17 @@
+{
+    "cmake.generator": "Ninja",
+    "cmake.sourceDirectory": "${workspaceFolder}",
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+    "terminal.integrated.env.linux": {
+        "LANG":"en_US.UTF-8",
+        "LC_ALL":"en_US.UTF-8"
+    },
+    "files.associations": {
+        "fstream": "cpp",
+        "qapplication": "cpp",
+        "qwidget": "cpp",
+        "iostream": "cpp",
+        "string": "cpp",
+        "stdexcept": "cpp"
+    }
+}
