@@ -10,6 +10,3 @@ Build/
 *.old
 *.orig
 
-# Ignore editor/IDE specific files
-.vscode/
-
