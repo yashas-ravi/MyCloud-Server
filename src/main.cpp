@@ -17,9 +17,9 @@ int main(int argc, char *argv[]) {
     }
     userData.close();
     if(newUser){
-        appSetup wizard;
-        wizard.setWindowTitle("MyCloud Setup");
-        if(wizard.exec() == QDialog::Accepted){
+        appSetup setupWizard;
+        setupWizard.setWindowTitle("MyCloud Setup");
+        if(setupWizard.exec() == QDialog::Accepted){
             Dashboard window;
             window.setWindowTitle("MyCloud Dashboard");
             window.show();
@@ -27,10 +27,14 @@ int main(int argc, char *argv[]) {
         }
      }
      else{
-        Dashboard window;
-        window.setWindowTitle("MyCloud Dashboard");
-        window.show();
-        return app.exec();
+        login loginWizard;
+        loginWizard.setWindowTitle("MyCloud Login");
+        if(loginWizard.exec() == QDialog::Accepted){
+            Dashboard window;
+            window.setWindowTitle("MyCloud Dashboard");
+            window.show();
+            return app.exec();
+        }
      }
 
     return 0;

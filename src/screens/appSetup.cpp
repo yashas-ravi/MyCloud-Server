@@ -204,8 +204,8 @@ void appSetup::handleInput(int n){
 };
 
 void appSetup::handleSubmit(){
-    auth a;
-    int status = a.registerUser(userNameInput->text().toStdString(), userPassInput->text().toStdString());
+    auth Oauth;
+    int status = Oauth.registerUser(userNameInput->text().toStdString(), userPassInput->text().toStdString());
     if(status==0){
         submitBtn->setText("Done");
         submitBtn->setStyleSheet("background-color: rgb(44, 123, 48); color: rgb(5, 209, 49);");

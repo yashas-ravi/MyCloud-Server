@@ -12,6 +12,7 @@ set(SOURCES
     src/main.cpp
     src/screens/dashboard.cpp
     src/screens/appSetup.cpp
+    src/screens/login.cpp
     src/utilities/auth.cpp
     src/utilities/bcrypt.cpp
     src/utilities/blowfish.cpp

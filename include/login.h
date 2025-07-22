@@ -4,6 +4,7 @@
 
 #include <QDialog>
 #include <QPushButton>
+#include <QLabel>
 
 class login : public QDialog {
     public:
@@ -11,6 +12,7 @@ class login : public QDialog {
     private:
         QPushButton* submitbtn;
         QLineEdit* userPass;
+        QLabel* valText;
         void handleInput();
         void handleSubmit();
 };

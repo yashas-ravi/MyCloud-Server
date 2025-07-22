@@ -1,0 +1,15 @@
+# Ignore build directories
+build/
+Build/
+
+# Ignore temporary files
+*.log
+*.tmp
+*.swp
+*.bak
+*.old
+*.orig
+
+# Ignore editor/IDE specific files
+.vscode/
+

@@ -12,19 +12,20 @@ login::login(QWidget* parent):QDialog(parent){
     setAttribute(Qt::WA_TranslucentBackground);
     resize(1080,700);
     //main window layout
-    QHBoxLayout* mainWrapper = new QHBoxLayout(this);
+    QHBoxLayout* mainLayout = new QHBoxLayout(this);
     // main window widget
     QWidget* mainWindow = new QWidget(this);
     mainWindow->setObjectName("mainWindow");
     //image widget
     QLabel* imgHolder = new QLabel(mainWindow);
-    QPixmap img("/assets/login-img.png");
+    QPixmap img(":assets/login-img.png");
     imgHolder->setPixmap(img);
     imgHolder->setScaledContents(true);
-    imgHolder->setFixedSize(400,400);
+    imgHolder->setFixedSize(300,300);
     imgHolder->show();
     //form widget
     QWidget* formWidget = new QWidget(mainWindow);
+    formWidget->setFixedSize(300,500);
     //heading
     QLabel* heading =  new QLabel("Login to MyCloud");
     heading->setObjectName("heading");
@@ -34,7 +35,7 @@ login::login(QWidget* parent):QDialog(parent){
     std::string userName = a.getUser();
     //label
     QLabel* userLabel = new QLabel(formWidget);
-    userLabel->setText(QString::fromStdString(userName));
+    userLabel->setText("user: "+QString::fromStdString(userName));
     userLabel->setObjectName("userName");
     //password validator
     QRegularExpression passRegix("[A-Za-z0-9]{6,15}");  //for user password
@@ -45,33 +46,46 @@ login::login(QWidget* parent):QDialog(parent){
     userPass->setValidator(validPass);
     userPass->setMaxLength(15);
     userPass->setObjectName("userPass");
+    //validator text
+    valText = new QLabel(formWidget);
+    valText->setText("");
+    valText->setAlignment(Qt::AlignCenter);
+    valText->setObjectName("valText");
     //submit button
     submitbtn = new QPushButton(formWidget);
     submitbtn->setText("Login");
+    submitbtn->setObjectName("submitBtn");
     submitbtn->setCursor(Qt::PointingHandCursor);
     submitbtn->setDisabled(true);
-    submitbtn->setStyleSheet("submitBtn");
     //add things together
     QVBoxLayout* formWrapper = new QVBoxLayout(formWidget);
-    formWrapper->addWidget(heading);
-    formWrapper->addSpacing(20);
-    formWrapper->addWidget(userLabel);
+    formWrapper->addWidget(heading,0,Qt::AlignHCenter);
+    formWrapper->addSpacing(40);
+    formWrapper->addWidget(userLabel,0,Qt::AlignHCenter);
     formWrapper->addSpacing(10);
     formWrapper->addWidget(userPass);
+    formWrapper->addSpacing(40);
+    formWrapper->addWidget(valText);
+    formWrapper->addSpacing(10);
+    formWrapper->addWidget(submitbtn);
     formWrapper->addStretch();
     //add image and form together
-    mainWrapper->addWidget(imgHolder);
-    mainWrapper->addSpacing(10);
-    mainWrapper->addWidget(formWidget);
+    QHBoxLayout* windowWrapper = new QHBoxLayout(mainWindow);
+    windowWrapper->addWidget(imgHolder,0,Qt::AlignCenter);
+    windowWrapper->addSpacing(20);
+    windowWrapper->addWidget(formWidget,0,Qt::AlignCenter);
+    windowWrapper->addSpacing(20);
+    mainWindow->setLayout(windowWrapper);
     //set main window
-    mainWindow->setLayout(mainWrapper);
-
+    mainLayout->setContentsMargins(0,0,0,0);
+    mainLayout->addWidget(mainWindow);
+    //connect methods to states
     connect(userPass, &QLineEdit::textChanged, this, &login::handleInput);
     connect(submitbtn, &QPushButton::pressed, this, &login::handleSubmit);
 
     this->setStyleSheet(R"(
         #mainWindow{
-            backgound-color: #1e1e2f;
+            background-color: #1e1e2f;
         }
         #heading{
             font-size: 30px;
@@ -79,7 +93,7 @@ login::login(QWidget* parent):QDialog(parent){
             color: white;
         }
         #userName{
-            font-size: 15px;
+            font-size: 18px;
             color: white;
             font-weight: normal;
             height: fit-content;
@@ -98,6 +112,18 @@ login::login(QWidget* parent):QDialog(parent){
             padding: 5px;
             border-radius: 5px;
         }
+        #submitBtn:disabled{
+            color: rgb(200, 200, 200);
+            background-color: rgb(29, 29, 94);
+        }
+        #valText{
+            color: transparent;
+            background-color: transparent;
+            font-size: 15px;
+            font-weight: normal;
+            padding: 5px;
+            border-radius:5px;
+        }
         )"
     );
 }
@@ -114,5 +140,15 @@ void login::handleInput(){
 } 
 
 void login::handleSubmit(){
-    accept();
+    auth Oauth;
+    int getVal = Oauth.validateUser(userPass->text().toStdString());
+    if(getVal==1){
+        valText->setText("Login Successful");
+        valText->setStyleSheet("background-color: rgb(98, 241, 132); color: rgb(14, 131, 25)");
+        accept();
+    }
+    else{
+        valText->setText("Wrong Password");
+        valText->setStyleSheet("background-color: rgb(250, 109, 109); color: rgb(156, 17, 17)");
+    }
 }
