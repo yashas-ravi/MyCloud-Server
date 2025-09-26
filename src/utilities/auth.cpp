@@ -9,8 +9,8 @@
 using namespace std;
 
 int auth::registerUser(string userName, string userPassword){
-    filesystem::create_directory("data");
-    ofstream dataFile("data/userdata.txt");
+    filesystem::create_directory("var");
+    ofstream dataFile("var/ud.txt");
 
     if(dataFile.is_open()){
         string hashPass = bcrypt::generateHash(userPassword);
@@ -25,7 +25,7 @@ int auth::registerUser(string userName, string userPassword){
 }
 
 int auth::validateUser(string pass){
-    ifstream dataFile("data/userdata.txt");
+    ifstream dataFile("var/ud.txt");
     int returnVal=0;
     if (dataFile.is_open())
     {
@@ -49,7 +49,7 @@ int auth::validateUser(string pass){
 }
 
 string auth::getUser(){
-    ifstream dataFile("data/userdata.txt");
+    ifstream dataFile("var/ud.txt");
     string userName;
     if(dataFile.is_open()){
        dataFile>>userName;

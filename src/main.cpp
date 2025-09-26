@@ -10,12 +10,13 @@ int main(int argc, char *argv[]) {
     app.setWindowIcon(QIcon(":/assets/MyCloud-logo.png"));
     
     //check if user already exists
-    ifstream userData("data/userdata.txt");
+    ifstream userData("var/ud.txt");
     bool newUser=false;
     if(!userData.is_open()){
         newUser=true;
     }
     userData.close();
+    //screen for sign up
     if(newUser){
         appSetup setupWizard;
         setupWizard.setWindowTitle("MyCloud Setup");
@@ -26,6 +27,7 @@ int main(int argc, char *argv[]) {
             return app.exec();
         }
      }
+     //screen for sign in
      else{
         login loginWizard;
         loginWizard.setWindowTitle("MyCloud Login");

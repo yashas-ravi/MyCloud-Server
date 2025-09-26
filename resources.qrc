@@ -4,5 +4,8 @@
         <file>assets/MyCloud-logo.png</file>
         <file>assets/setup-bg.png</file>
         <file>assets/login-img.png</file>
+        <file>assets/dashboard.png</file>
+        <file>assets/globe.png</file>
+        <file>assets/settings.png</file>
     </qresource>
 </RCC>
